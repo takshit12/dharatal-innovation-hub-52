@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import { Send } from "lucide-react";
 
 interface Message {
-  role: "assistant" | "user";
+  role: "assistant" | "user" | "debug";
   content: string;
 }
 
@@ -25,6 +25,10 @@ export const ChatInterface = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const addDebugMessage = (content: string) => {
+    setMessages(prev => [...prev, { role: "debug", content }]);
+  };
+
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     const userMessage = input.trim();
@@ -32,12 +36,12 @@ export const ChatInterface = () => {
     if (!userMessage || isLoading) return;
 
     try {
-      // Clear input and show user message immediately
       setInput("");
       setIsLoading(true);
       setMessages(prev => [...prev, { role: "user", content: userMessage }]);
 
-      // Send request to webhook
+      addDebugMessage(`Sending message: ${userMessage}`);
+
       const response = await fetch("https://hook.eu2.make.com/yz4o4r49vpaoydbbn8lwwo83d27fikt9", {
         method: "POST",
         headers: {
@@ -46,35 +50,45 @@ export const ChatInterface = () => {
         body: JSON.stringify({ message: userMessage })
       });
 
-      // Get response as text first
+      addDebugMessage(`Response status: ${response.status}`);
+      
       const responseText = await response.text();
-      console.log("Raw response:", responseText);
+      addDebugMessage(`Raw response: ${responseText}`);
 
-      // Try to parse the response text
-      try {
-        const data = JSON.parse(responseText);
-        console.log("Parsed data:", data);
+      if (responseText) {
+        try {
+          const data = JSON.parse(responseText);
+          addDebugMessage(`Parsed data: ${JSON.stringify(data, null, 2)}`);
 
-        if (Array.isArray(data) && data.length > 0 && data[0].body) {
-          setMessages(prev => [...prev, {
-            role: "assistant",
-            content: data[0].body.trim()
-          }]);
-        } else {
-          throw new Error("Invalid response format");
+          if (Array.isArray(data) && data.length > 0 && data[0].body) {
+            const assistantMessage = data[0].body.trim();
+            addDebugMessage(`Extracted message: ${assistantMessage}`);
+            
+            setMessages(prev => [...prev, {
+              role: "assistant",
+              content: assistantMessage
+            }]);
+          } else {
+            throw new Error("Invalid response structure");
+          }
+        } catch (parseError) {
+          addDebugMessage(`Parse error: ${parseError.message}`);
+          addDebugMessage(`Response text length: ${responseText.length}`);
+          addDebugMessage(`First 50 characters: ${responseText.slice(0, 50)}`);
+          throw parseError;
         }
-      } catch (parseError) {
-        console.error("Parse error:", parseError);
-        setMessages(prev => [...prev, {
-          role: "assistant",
-          content: "Error parsing response data."
-        }]);
+      } else {
+        throw new Error("Empty response received");
       }
     } catch (error) {
-      console.error("Network error:", error);
+      addDebugMessage(`Error: ${error.message}`);
+      if (error.stack) {
+        addDebugMessage(`Stack: ${error.stack}`);
+      }
+      
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: "Sorry, I encountered an error. Please try again."
+        content: `Error: ${error.message}`
       }]);
     } finally {
       setIsLoading(false);
@@ -87,13 +101,21 @@ export const ChatInterface = () => {
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`flex ${message.role === "assistant" ? "justify-start" : "justify-end"}`}
+            className={`flex ${
+              message.role === "assistant" 
+                ? "justify-start" 
+                : message.role === "user"
+                  ? "justify-end"
+                  : "justify-center"
+            }`}
           >
             <div
               className={`max-w-[80%] p-3 border-2 border-black ${
                 message.role === "assistant"
                   ? "bg-[#FF90E8] text-black"
-                  : "bg-white"
+                  : message.role === "debug"
+                    ? "bg-gray-100 text-gray-600 font-mono text-sm"
+                    : "bg-white"
               }`}
             >
               {message.content}
