@@ -52,6 +52,7 @@ export const ChatInterface = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json"
         },
         body: JSON.stringify({
           message: userMessage
@@ -63,8 +64,11 @@ export const ChatInterface = () => {
       // Add a delay of 15 seconds before processing the response
       await new Promise(resolve => setTimeout(resolve, 15000));
 
-      const data = await response.json();
-      console.log("Webhook response:", data); // Debug log
+      const responseText = await response.text();
+      console.log("Raw response:", responseText); // Debug log
+
+      const data = JSON.parse(responseText);
+      console.log("Parsed webhook response:", data); // Debug log
 
       if (Array.isArray(data) && data.length > 0) {
         const webhookResponse = data[0] as WebhookResponse;
