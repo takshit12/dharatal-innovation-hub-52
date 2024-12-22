@@ -1,49 +1,55 @@
 import { Navbar } from "@/components/Navbar";
 import { ServiceCard } from "@/components/ServiceCard";
-import { Brain, Bot, MessageSquare, Cog, Mic, Workflow } from "lucide-react";
+import { Brain, Bot, MessageSquare, Workflow, Cog, Mic } from "lucide-react";
 
 const services = [
   {
-    title: "01 AI WebApps",
+    title: "AI WebApps",
     description: "Custom AI-powered web applications tailored to your business needs.",
     Icon: Brain,
-    slug: "ai-webapps"
+    slug: "ai-webapps",
+    number: "01"
   },
   {
-    title: "02 AI Agents",
+    title: "AI Agents",
     description: "Intelligent AI agents that automate complex business processes.",
     Icon: Bot,
-    slug: "ai-agents"
+    slug: "ai-agents",
+    number: "02"
   },
   {
-    title: "03 AI Chatbots",
+    title: "AI Chatbots",
     description: "Advanced conversational AI for customer support and engagement.",
     Icon: MessageSquare,
-    slug: "ai-chatbots"
+    slug: "ai-chatbots",
+    number: "03"
   },
   {
-    title: "04 AI Automations",
+    title: "AI Automations",
     description: "Streamline workflows with intelligent automation solutions.",
     Icon: Workflow,
-    slug: "ai-automations"
+    slug: "ai-automations",
+    number: "04"
   },
   {
-    title: "05 LLM Fine-tuning",
+    title: "LLM Fine-tuning",
     description: "Optimize language models for your specific use case.",
     Icon: Cog,
-    slug: "llm-fine-tuning"
+    slug: "llm-fine-tuning",
+    number: "05"
   },
   {
-    title: "06 Voice Agents",
+    title: "Voice Agents",
     description: "Natural voice interactions powered by advanced AI technology.",
     Icon: Mic,
-    slug: "voice-agents"
+    slug: "voice-agents",
+    number: "06"
   }
 ];
 
 const ServicesOverviewPage = () => {
   return (
-    <div className="min-h-screen bg-[#D3E4FD]">
+    <div className="min-h-screen bg-[#FFF5E0]">
       <Navbar />
       <div className="pt-32 pb-20 px-6">
         <div className="container mx-auto">
