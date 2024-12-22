@@ -4,16 +4,52 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
 
 const ContactPage = () => {
   const { toast } = useToast();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [requirement, setRequirement] = useState(false);
+  const [details, setDetails] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message sent",
-      description: "We'll get back to you as soon as possible.",
-    });
+    
+    try {
+      const response = await fetch("https://hook.eu2.make.com/d1t8uvyur6v69lm2p6gtulkzpliewi3q", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Name: name,
+          Email: email,
+          Requirement: requirement,
+          Details: details,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message sent",
+          description: "We'll get back to you as soon as possible.",
+        });
+        setName("");
+        setEmail("");
+        setRequirement(false);
+        setDetails("");
+      } else {
+        throw new Error("Failed to submit form");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit form. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -34,7 +70,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-bold">Email</h3>
-                    <p>contact@dharatal.ai</p>
+                    <p>dharatalaiservices@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -43,7 +79,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-bold">Phone</h3>
-                    <p>+1 (555) 123-4567</p>
+                    <p>+919521452479</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -52,7 +88,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-bold">Location</h3>
-                    <p>San Francisco, CA</p>
+                    <p>Jaipur, Rajasthan</p>
                   </div>
                 </div>
               </div>
@@ -62,15 +98,45 @@ const ContactPage = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium mb-2">Name</label>
-                  <Input className="neobrutalism w-full" required />
+                  <Input 
+                    className="neobrutalism w-full" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required 
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Email</label>
-                  <Input type="email" className="neobrutalism w-full" required />
+                  <Input 
+                    type="email" 
+                    className="neobrutalism w-full" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required 
+                  />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="requirement"
+                    checked={requirement}
+                    onCheckedChange={(checked) => setRequirement(checked as boolean)}
+                  />
+                  <label 
+                    htmlFor="requirement" 
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    I have specific requirements
+                  </label>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Message</label>
-                  <Textarea className="neobrutalism w-full" rows={4} required />
+                  <Textarea 
+                    className="neobrutalism w-full" 
+                    rows={4}
+                    value={details}
+                    onChange={(e) => setDetails(e.target.value)}
+                    required 
+                  />
                 </div>
                 <Button 
                   type="submit"

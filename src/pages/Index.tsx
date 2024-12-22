@@ -33,7 +33,7 @@ const featuredServices = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-highlight-green">
       <Navbar />
       
       {/* Hero Section */}
@@ -68,7 +68,7 @@ const Index = () => {
       </section>
 
       {/* Featured Services Section */}
-      <section className="py-20 bg-gray-50/50">
+      <section className="py-20 bg-white/50">
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl font-bold tracking-tight">Featured Services</h2>

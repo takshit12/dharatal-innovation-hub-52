@@ -6,156 +6,99 @@ import { Navbar } from "@/components/Navbar";
 const services = {
   "data-extraction": {
     title: "Data Extraction",
-    description: "Automate the collection of structured data from any source with our advanced AI-powered extraction tools.",
+    description: "Transform unstructured data into actionable insights with our advanced AI-powered extraction tools.",
     Icon: Database,
     features: [
-      "Automated data extraction from various sources",
-      "Support for multiple file formats",
+      "Automated data extraction from any source",
+      "Support for PDFs, images, and web content",
       "Real-time processing capabilities",
-      "Custom extraction rules",
+      "Custom extraction rules and templates",
       "Data validation and cleaning"
     ],
     benefits: [
-      "Save time and resources on manual data entry",
-      "Reduce errors and improve accuracy",
-      "Scale your data processing operations",
-      "Faster decision-making with quick data access",
-      "Integrate with existing systems seamlessly"
+      "Reduce manual data entry costs by 80%",
+      "Achieve 99% accuracy in data extraction",
+      "Process thousands of documents in minutes",
+      "Seamless integration with existing systems",
+      "Scale operations without adding headcount"
     ]
   },
   "lead-generation": {
     title: "Lead Generation",
-    description: "AI-powered tools for smarter, faster prospecting that help you find and connect with qualified leads.",
+    description: "Generate high-quality leads at scale with AI-powered prospecting tools.",
     Icon: Users,
     features: [
-      "AI-driven lead scoring",
-      "Automated prospect research",
-      "Email verification",
+      "AI-driven lead scoring and qualification",
+      "Multi-channel lead capture",
+      "Automated email verification",
       "Social media integration",
       "Custom targeting criteria"
     ],
     benefits: [
-      "Higher quality leads",
-      "Increased conversion rates",
-      "Reduced prospecting time",
-      "Better ROI on marketing efforts",
-      "Scalable lead generation process"
+      "Generate 3x more qualified leads",
+      "Reduce cost per lead by 60%",
+      "Automate 90% of prospecting tasks",
+      "Improve conversion rates by 40%",
+      "Scale your sales pipeline efficiently"
     ]
   },
   "ai-agents": {
     title: "AI Agents",
-    description: "AI systems tailored to your business processes.",
+    description: "Deploy intelligent AI agents that automate complex business processes.",
     Icon: Brain,
     features: [
-      "Customizable AI solutions",
-      "Integration with existing workflows",
-      "Real-time analytics and reporting",
-      "Scalable architecture",
-      "Ongoing support and updates"
-    ],
-    benefits: [
-      "Enhance operational efficiency",
-      "Reduce manual workload",
-      "Gain insights from data",
-      "Adapt to changing business needs",
-      "Stay ahead of the competition"
-    ]
-  },
-  "voice-agents": {
-    title: "Voice Agents",
-    description: "Conversational AI for seamless customer interactions.",
-    Icon: Mic,
-    features: [
+      "Custom AI agent development",
       "Natural language processing",
-      "Multi-channel support",
-      "Customizable voice profiles",
-      "Integration with CRM systems",
-      "Analytics and performance tracking"
+      "Task automation capabilities",
+      "Integration with existing tools",
+      "24/7 operation capability"
     ],
     benefits: [
-      "Improve customer satisfaction",
-      "Reduce response times",
-      "Enhance brand engagement",
-      "Gather valuable customer insights",
-      "Scale customer support operations"
-    ]
-  },
-  "rags": {
-    title: "RAGs",
-    description: "Combine large language models with up-to-date knowledge.",
-    Icon: Code,
-    features: [
-      "Integration with various data sources",
-      "Real-time knowledge updates",
-      "Customizable model training",
-      "User-friendly interface",
-      "Robust security measures"
-    ],
-    benefits: [
-      "Stay informed with the latest data",
-      "Enhance decision-making capabilities",
-      "Improve content generation",
-      "Adapt to industry changes quickly",
-      "Leverage AI for competitive advantage"
-    ]
-  },
-  "chatbots": {
-    title: "Chatbots",
-    description: "Custom-built chatbots for engagement and support.",
-    Icon: MessageSquare,
-    features: [
-      "24/7 customer support",
-      "Multi-language support",
-      "Integration with messaging platforms",
-      "Customizable conversation flows",
-      "Analytics and reporting"
-    ],
-    benefits: [
+      "Automate repetitive tasks",
       "Reduce operational costs",
-      "Enhance customer engagement",
-      "Gather customer feedback",
-      "Improve response accuracy",
-      "Scale support without additional resources"
+      "Improve customer response times",
+      "Scale operations efficiently",
+      "Free up human resources"
     ]
   },
   "web-scraping": {
     title: "Web Scraping",
-    description: "Efficient, reliable web data gathering.",
+    description: "Extract valuable data from websites with our reliable scraping solutions.",
     Icon: Bot,
     features: [
       "Automated data collection",
-      "Support for various websites",
-      "Data cleaning and formatting",
-      "Real-time data updates",
-      "Custom scraping solutions"
+      "Real-time scraping capabilities",
+      "Custom scraping rules",
+      "Anti-detection mechanisms",
+      "Data cleaning and formatting"
     ],
     benefits: [
-      "Access to valuable market insights",
-      "Save time on manual data collection",
-      "Enhance data-driven decision making",
-      "Stay ahead of competitors",
-      "Integrate data into existing systems"
+      "Access real-time market data",
+      "Monitor competitor pricing",
+      "Gather customer insights",
+      "Track market trends",
+      "Make data-driven decisions"
     ]
   },
   "llm-fine-tuning": {
     title: "LLM Fine-tuning",
-    description: "Specialized models for your unique use cases.",
+    description: "Optimize language models for your specific use case with efficient fine-tuning.",
     Icon: Cog,
     features: [
       "Custom model training",
-      "Integration with existing datasets",
-      "Performance optimization",
-      "User-friendly interface",
-      "Ongoing support and updates"
+      "Efficient fine-tuning process",
+      "Self-hosting options",
+      "Cost optimization",
+      "Performance monitoring"
     ],
     benefits: [
-      "Tailored solutions for specific needs",
+      "Reduce inference costs by 70%",
       "Improve model accuracy",
-      "Adapt to changing requirements",
-      "Leverage AI for unique applications",
-      "Gain a competitive edge"
+      "Deploy on your infrastructure",
+      "Scale efficiently",
+      "Maintain data privacy"
     ]
-  },
+  }
 };
 
 const ServicePage = () => {
@@ -167,10 +110,10 @@ const ServicePage = () => {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-highlight-yellow">
       <Navbar />
       <ServiceDetail {...service} />
-    </>
+    </div>
   );
 };
 
