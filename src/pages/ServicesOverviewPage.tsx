@@ -51,16 +51,14 @@ const ServicesOverviewPage = () => {
   return (
     <div className="min-h-screen bg-[#D3E4FD]">
       <Navbar />
-      <div className="pt-32 pb-20 px-6">
-        <div className="container mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-12 tracking-tight font-mono">
-            Our <span className="text-[#FF90E8]">Services</span>
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service) => (
-              <ServiceCard key={service.title} {...service} />
-            ))}
-          </div>
+      <div className="container mx-auto px-6 pt-32">
+        <h1 className="text-4xl font-bold mb-12 tracking-tight font-mono text-black">
+          Our <span className="text-[#0EA5E9]">Services</span>
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
+          {services.map((service) => (
+            <ServiceCard key={service.title} {...service} />
+          ))}
         </div>
       </div>
     </div>
