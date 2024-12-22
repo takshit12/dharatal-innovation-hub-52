@@ -60,8 +60,8 @@ export const ChatInterface = () => {
 
       if (!response.ok) throw new Error("Failed to get response");
 
-      // Add a delay of 1 second before processing the response
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Add a delay of 15 seconds before processing the response
+      await new Promise(resolve => setTimeout(resolve, 15000));
 
       const data = await response.json();
       console.log("Webhook response:", data); // Debug log
