@@ -59,8 +59,8 @@ const Index = () => {
         </div>
         
         <div className="mt-32">
-          <h2 className="text-3xl font-bold mb-12 tracking-tight font-mono">
-            Our <span className="text-[#FF90E8]">Services</span>
+          <h2 className="text-3xl font-bold mb-12 tracking-tight font-mono text-black">
+            Our <span className="text-[#ff6b00]">Services</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
             {services.map((service) => (
@@ -70,8 +70,8 @@ const Index = () => {
         </div>
 
         <div className="mb-32">
-          <h2 className="text-3xl font-bold mb-8 tracking-tight font-mono">
-            Talk to <span className="text-[#FF90E8]">Dharatal AI</span>
+          <h2 className="text-3xl font-bold mb-8 tracking-tight font-mono text-black">
+            Talk to <span className="text-[#ff6b00]">Dharatal AI</span>
           </h2>
           <ChatInterface />
         </div>
