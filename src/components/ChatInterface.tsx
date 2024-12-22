@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Send } from "lucide-react";
@@ -8,78 +8,61 @@ interface Message {
   content: string;
 }
 
-interface WebhookResponse {
-  body: string;
-  status: number;
-  headers: any[];
-}
-
 export const ChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
-    // Send initial message
-    setMessages([
-      {
-        role: "assistant",
-        content: "Hey, it's Dharatal AI🤖 What do you need help with? ✨"
-      }
-    ]);
+    setMessages([{
+      role: "assistant",
+      content: "Hey, it's Dharatal AI🤖 What do you need help with? ✨"
+    }]);
   }, []);
 
   useEffect(() => {
-    scrollToBottom();
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
-
     const userMessage = input.trim();
-    setInput("");
-    setMessages(prev => [...prev, { role: "user", content: userMessage }]);
-    setIsLoading(true);
+    
+    if (!userMessage || isLoading) return;
 
     try {
+      // Clear input and show user message immediately
+      setInput("");
+      setIsLoading(true);
+      setMessages(prev => [...prev, { role: "user", content: userMessage }]);
+
+      // Send request to webhook
       const response = await fetch("https://hook.eu2.make.com/yz4o4r49vpaoydbbn8lwwo83d27fikt9", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          message: userMessage
-        }),
+        body: JSON.stringify({ message: userMessage })
       });
 
-      if (!response.ok) throw new Error("Failed to get response");
-
-      // Add a delay of 15 seconds before processing the response
-      await new Promise(resolve => setTimeout(resolve, 15000));
-
+      // Parse response
       const data = await response.json();
-      console.log("Webhook response:", data);
+      console.log("Response data:", data);
 
-      if (Array.isArray(data) && data.length > 0) {
-        const webhookResponse = data[0] as WebhookResponse;
-        if (webhookResponse && webhookResponse.body) {
-          setMessages(prev => [...prev, { 
-            role: "assistant", 
-            content: webhookResponse.body.trim() 
-          }]);
-        }
+      if (Array.isArray(data) && data.length > 0 && data[0].body) {
+        setMessages(prev => [...prev, {
+          role: "assistant",
+          content: data[0].body.trim()
+        }]);
+      } else {
+        throw new Error("Invalid response format");
       }
     } catch (error) {
-      console.error("Error in sendMessage:", error);
-      setMessages(prev => [...prev, { 
-        role: "assistant", 
-        content: "Sorry, I encountered an error while processing your message." 
+      console.error("Error:", error);
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: "Sorry, I encountered an error. Please try again."
       }]);
     } finally {
       setIsLoading(false);
