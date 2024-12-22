@@ -8,6 +8,12 @@ interface Message {
   content: string;
 }
 
+interface WebhookResponse {
+  body: string;
+  status: number;
+  headers: any[];
+}
+
 export const ChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -55,9 +61,17 @@ export const ChatInterface = () => {
       if (!response.ok) throw new Error("Failed to get response");
 
       const data = await response.json();
-      setMessages(prev => [...prev, { role: "assistant", content: data.body }]);
+      // Handle the array response format
+      const webhookResponse = data[0] as WebhookResponse;
+      
+      if (webhookResponse && webhookResponse.body) {
+        setMessages(prev => [...prev, { role: "assistant", content: webhookResponse.body }]);
+      } else {
+        throw new Error("Invalid response format");
+      }
     } catch (error) {
-      setMessages(prev => [...prev, { role: "assistant", content: "error" }]);
+      console.error("Error in sendMessage:", error);
+      setMessages(prev => [...prev, { role: "assistant", content: "Sorry, I encountered an error while processing your message." }]);
     } finally {
       setIsLoading(false);
     }
