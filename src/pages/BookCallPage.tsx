@@ -4,14 +4,24 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const BookCallPage = () => {
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [requirement, setRequirement] = useState(false);
   const [details, setDetails] = useState("");
+
+  useEffect(() => {
+    const serviceParam = searchParams.get('service');
+    if (serviceParam) {
+      setRequirement(true);
+      setDetails(`I'm interested in ${serviceParam}`);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
