@@ -8,6 +8,7 @@ import ServicePage from "./pages/ServicePage";
 import TeamPage from "./pages/TeamPage";
 import BookCallPage from "./pages/BookCallPage";
 import ServicesOverviewPage from "./pages/ServicesOverviewPage";
+import ContactPage from "./pages/ContactPage";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/team" element={<TeamPage />} />
           <Route path="/book-call" element={<BookCallPage />} />
           <Route path="/services" element={<ServicesOverviewPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

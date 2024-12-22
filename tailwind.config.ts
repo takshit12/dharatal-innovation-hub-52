@@ -29,29 +29,19 @@ export default {
           foreground: "#ffffff",
         },
         secondary: {
-          DEFAULT: "#ff90e8",
+          DEFAULT: "#F97316", // Bright Orange
           foreground: "#222222",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "#ff90e8",
+          DEFAULT: "#0EA5E9", // Ocean Blue
           foreground: "#222222",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+        highlight: {
+          green: "#F2FCE2",  // Soft Green
+          yellow: "#FEF7CD", // Soft Yellow
+          orange: "#FEC6A1", // Soft Orange
+          blue: "#1EAEDB",   // Bright Blue
+        }
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -34,6 +34,9 @@ export const Navbar = () => {
             <Link to="/team" className="text-primary hover:text-primary/80 transition-colors font-medium">
               Team
             </Link>
+            <Link to="/contact" className="text-primary hover:text-primary/80 transition-colors font-medium">
+              Contact
+            </Link>
             <Link to="/book-call">
               <Button 
                 variant="default" 
