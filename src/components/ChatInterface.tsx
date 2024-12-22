@@ -46,23 +46,35 @@ export const ChatInterface = () => {
         body: JSON.stringify({ message: userMessage })
       });
 
-      // Parse response
-      const data = await response.json();
-      console.log("Response data:", data);
+      // Get response as text first
+      const responseText = await response.text();
+      console.log("Raw response:", responseText);
 
-      if (Array.isArray(data) && data.length > 0 && data[0].body) {
+      // Try to parse the response text
+      try {
+        const data = JSON.parse(responseText);
+        console.log("Parsed data:", data);
+
+        if (Array.isArray(data) && data.length > 0 && data[0].body) {
+          setMessages(prev => [...prev, {
+            role: "assistant",
+            content: data[0].body.trim()
+          }]);
+        } else {
+          throw new Error("Invalid response format");
+        }
+      } catch (parseError) {
+        console.error("Parse error:", parseError);
         setMessages(prev => [...prev, {
           role: "assistant",
-          content: data[0].body.trim()
+          content: "Error parsing response data."
         }]);
-      } else {
-        throw new Error("Invalid response format");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Network error:", error);
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: `Error: ${error instanceof Error ? error.message : "An unknown error occurred"}`
+        content: "Sorry, I encountered an error. Please try again."
       }]);
     } finally {
       setIsLoading(false);
