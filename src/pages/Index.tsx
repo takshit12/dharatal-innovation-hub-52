@@ -6,25 +6,25 @@ import { Link } from "react-router-dom";
 
 const featuredServices = [
   {
-    title: "Data Extraction",
+    title: "01 Data Extraction",
     description: "Automate the collection of structured data from any source.",
     Icon: Database,
     slug: "data-extraction"
   },
   {
-    title: "Lead Generation",
+    title: "02 Lead Generation",
     description: "AI-powered tools for smarter, faster prospecting.",
     Icon: Users,
     slug: "lead-generation"
   },
   {
-    title: "AI Agents",
+    title: "03 AI Agents",
     description: "AI systems tailored to your business processes.",
     Icon: Brain,
     slug: "ai-agents"
   },
   {
-    title: "Web Scraping",
+    title: "04 Web Scraping",
     description: "Efficient, reliable web data gathering.",
     Icon: Bot,
     slug: "web-scraping"
@@ -33,23 +33,24 @@ const featuredServices = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-highlight-green">
+    <div className="min-h-screen bg-[#F4F4F4]">
       <Navbar />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6">
         <div className="container mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-primary mb-6 animate-fade-in tracking-tight">
-            Empowering Your Business with AI-Driven Solutions
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in tracking-tight font-mono">
+            Empowering Your Business with{" "}
+            <span className="text-[#0000FF]">AI-Driven Solutions</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto animate-fade-in">
+          <p className="text-xl text-black mb-8 max-w-2xl mx-auto animate-fade-in font-sans">
             From Data Extraction to LLM Fine-tuning, We Transform Ideas into Intelligent Systems
           </p>
           <div className="space-x-4 animate-fade-in">
             <Link to="/book-call">
               <Button 
                 size="lg" 
-                className="neobrutalism-pink hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+                className="bg-[#0000FF] text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
               >
                 Book a Call
               </Button>
@@ -58,7 +59,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="neobrutalism hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+                className="bg-white text-[#0000FF] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
               >
                 Explore Services
               </Button>
@@ -68,14 +69,14 @@ const Index = () => {
       </section>
 
       {/* Featured Services Section */}
-      <section className="py-20 bg-white/50">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl font-bold tracking-tight">Featured Services</h2>
+            <h2 className="text-4xl font-bold tracking-tight font-mono">Featured Services</h2>
             <Link to="/services">
               <Button 
                 variant="outline"
-                className="neobrutalism hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+                className="bg-white text-[#0000FF] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
               >
                 View All Services
               </Button>
