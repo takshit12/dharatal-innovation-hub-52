@@ -60,14 +60,21 @@ export const ChatInterface = () => {
 
       if (!response.ok) throw new Error("Failed to get response");
 
+      // Add a delay of 1 second before processing the response
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       const data = await response.json();
-      // Handle the array response format
-      const webhookResponse = data[0] as WebhookResponse;
-      
-      if (webhookResponse && webhookResponse.body) {
-        setMessages(prev => [...prev, { role: "assistant", content: webhookResponse.body }]);
+      console.log("Webhook response:", data); // Debug log
+
+      if (Array.isArray(data) && data.length > 0) {
+        const webhookResponse = data[0] as WebhookResponse;
+        if (webhookResponse && webhookResponse.body) {
+          setMessages(prev => [...prev, { role: "assistant", content: webhookResponse.body }]);
+        } else {
+          throw new Error("Invalid response format");
+        }
       } else {
-        throw new Error("Invalid response format");
+        throw new Error("Invalid response format - expected array");
       }
     } catch (error) {
       console.error("Error in sendMessage:", error);
