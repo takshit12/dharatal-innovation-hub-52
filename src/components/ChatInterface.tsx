@@ -62,7 +62,7 @@ export const ChatInterface = () => {
       console.error("Error:", error);
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: "Sorry, I encountered an error. Please try again."
+        content: `Error: ${error instanceof Error ? error.message : "An unknown error occurred"}`
       }]);
     } finally {
       setIsLoading(false);
