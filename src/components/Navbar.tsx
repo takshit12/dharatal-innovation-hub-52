@@ -17,7 +17,7 @@ export const Navbar = () => {
   // Determine button color based on current route
   const getButtonColor = () => {
     if (location.pathname === '/') return 'bg-[#ff6b00]';
-    if (location.pathname.startsWith('/services')) return 'bg-[#0000FF]';
+    if (location.pathname.startsWith('/services')) return 'bg-[#1714db]';
     return 'bg-[#FF90E8]';
   };
 
@@ -25,20 +25,20 @@ export const Navbar = () => {
     <nav className="fixed w-full z-50 transition-all duration-300">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-[#ff6b00] tracking-tight">
+          <Link to="/" className="text-2xl font-bold text-black tracking-tight">
             Dharatal AI
           </Link>
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-[#ff6b00] hover:text-[#ff6b00]/80 transition-colors font-medium">
+            <Link to="/" className="text-black hover:text-black/80 transition-colors font-medium">
               Home
             </Link>
-            <Link to="/services" className="text-[#ff6b00] hover:text-[#ff6b00]/80 transition-colors font-medium">
+            <Link to="/services" className="text-black hover:text-black/80 transition-colors font-medium">
               Services
             </Link>
-            <Link to="/team" className="text-[#ff6b00] hover:text-[#ff6b00]/80 transition-colors font-medium">
+            <Link to="/team" className="text-black hover:text-black/80 transition-colors font-medium">
               Team
             </Link>
-            <Link to="/contact" className="text-[#ff6b00] hover:text-[#ff6b00]/80 transition-colors font-medium">
+            <Link to="/contact" className="text-black hover:text-black/80 transition-colors font-medium">
               Contact
             </Link>
             <Link to="/book-call">
