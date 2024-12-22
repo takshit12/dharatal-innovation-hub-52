@@ -9,13 +9,23 @@ interface ServiceDetailProps {
   Icon: LucideIcon;
   features: string[];
   benefits: string[];
+  technologies: string[];
+  customization: string[];
 }
 
-export const ServiceDetail = ({ title, description, Icon, features, benefits }: ServiceDetailProps) => {
+export const ServiceDetail = ({ 
+  title, 
+  description, 
+  Icon, 
+  features, 
+  benefits,
+  technologies,
+  customization 
+}: ServiceDetailProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-6">
+    <div className="min-h-screen pt-24 pb-16 px-6 bg-[#D3E4FD]">
       <div className="container mx-auto">
         <Button 
           variant="outline" 
@@ -59,6 +69,30 @@ export const ServiceDetail = ({ title, description, Icon, features, benefits }: 
                 <li key={index} className="flex items-start">
                   <span className="w-2 h-2 mt-2 mr-2 bg-[#FF90E8] border border-black" />
                   {benefit}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="neobrutalism bg-white p-8">
+            <h2 className="text-2xl font-bold mb-4">Technologies</h2>
+            <ul className="space-y-3">
+              {technologies.map((tech, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="w-2 h-2 mt-2 mr-2 bg-[#FF90E8] border border-black" />
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="neobrutalism bg-white p-8">
+            <h2 className="text-2xl font-bold mb-4">Customization</h2>
+            <ul className="space-y-3">
+              {customization.map((custom, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="w-2 h-2 mt-2 mr-2 bg-[#FF90E8] border border-black" />
+                  {custom}
                 </li>
               ))}
             </ul>

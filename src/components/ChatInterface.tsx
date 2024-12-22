@@ -23,7 +23,7 @@ export const ChatInterface = () => {
     setMessages([
       {
         role: "assistant",
-        content: "Hey this is the dharatal ai let me know what do you need help with"
+        content: "Hey, it's Dharatal AI🤖 What do you need help with? ✨"
       }
     ]);
   }, []);
@@ -74,7 +74,7 @@ export const ChatInterface = () => {
             <div
               className={`max-w-[80%] p-3 border-2 border-black ${
                 message.role === "assistant"
-                  ? "bg-[#0000FF] text-white"
+                  ? "bg-[#FF90E8] text-black"
                   : "bg-white"
               }`}
             >
@@ -84,7 +84,7 @@ export const ChatInterface = () => {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="max-w-[80%] p-3 border-2 border-black bg-[#0000FF] text-white">
+            <div className="max-w-[80%] p-3 border-2 border-black bg-[#FF90E8] text-black">
               thinking...
             </div>
           </div>
@@ -102,7 +102,7 @@ export const ChatInterface = () => {
         <Button
           type="submit"
           disabled={isLoading}
-          className="neobrutalism bg-[#0000FF] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+          className="neobrutalism bg-[#FF90E8] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
         >
           <Send className="w-4 h-4" />
         </Button>
