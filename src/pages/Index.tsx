@@ -1,94 +1,119 @@
-import { Brain, Database, Users, Bot } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/Navbar";
-import { ServiceCard } from "@/components/ServiceCard";
-import { Link } from "react-router-dom";
-
-const featuredServices = [
-  {
-    title: "01 Data Extraction",
-    description: "Automate the collection of structured data from any source.",
-    Icon: Database,
-    slug: "data-extraction"
-  },
-  {
-    title: "02 Lead Generation",
-    description: "AI-powered tools for smarter, faster prospecting.",
-    Icon: Users,
-    slug: "lead-generation"
-  },
-  {
-    title: "03 AI Agents",
-    description: "AI systems tailored to your business processes.",
-    Icon: Brain,
-    slug: "ai-agents"
-  },
-  {
-    title: "04 Web Scraping",
-    description: "Efficient, reliable web data gathering.",
-    Icon: Bot,
-    slug: "web-scraping"
-  },
-];
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-[#F4F4F4]">
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="container mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in tracking-tight font-mono">
-            Empowering Your Business with{" "}
-            <span className="text-[#0000FF]">AI-Driven Solutions</span>
-          </h1>
-          <p className="text-xl text-black mb-8 max-w-2xl mx-auto animate-fade-in font-sans">
-            From Data Extraction to LLM Fine-tuning, We Transform Ideas into Intelligent Systems
-          </p>
-          <div className="space-x-4 animate-fade-in">
-            <Link to="/book-call">
-              <Button 
-                size="lg" 
-                className="bg-[#0000FF] text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
-              >
-                Book a Call
-              </Button>
-            </Link>
-            <Link to="/services">
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="bg-white text-[#0000FF] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
-              >
-                Explore Services
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+  const { toast } = useToast();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [requirement, setRequirement] = useState(false);
+  const [details, setDetails] = useState("");
 
-      {/* Featured Services Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl font-bold tracking-tight font-mono">Featured Services</h2>
-            <Link to="/services">
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch("https://hook.eu2.make.com/d1t8uvyur6v69lm2p6gtulkzpliewi3q", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Name: name,
+          Email: email,
+          Requirement: requirement,
+          Details: details,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Request submitted",
+          description: "We'll get back to you within 24 hours to schedule the call.",
+        });
+        setName("");
+        setEmail("");
+        setRequirement(false);
+        setDetails("");
+      } else {
+        throw new Error("Failed to submit form");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit form. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#E5DEFF]">
+      <Navbar />
+      <div className="pt-32 pb-20 px-6">
+        <div className="container mx-auto max-w-2xl">
+          <div className="neobrutalism bg-white p-8">
+            <h1 className="text-4xl font-bold mb-6 tracking-tight">Book a Call</h1>
+            <p className="text-gray-600 mb-8">
+              Schedule a consultation with our AI experts to discuss your project needs.
+            </p>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Name</label>
+                <Input 
+                  className="neobrutalism w-full" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required 
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <Input 
+                  type="email" 
+                  className="neobrutalism w-full" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required 
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="requirement"
+                  checked={requirement}
+                  onCheckedChange={(checked) => setRequirement(checked as boolean)}
+                />
+                <label 
+                  htmlFor="requirement" 
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  I have specific requirements
+                </label>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Project Details</label>
+                <Textarea 
+                  className="neobrutalism w-full" 
+                  rows={4}
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
+                  required 
+                />
+              </div>
               <Button 
-                variant="outline"
-                className="bg-white text-[#0000FF] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+                type="submit"
+                className="w-full neobrutalism-pink hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
               >
-                View All Services
+                Request Call
               </Button>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredServices.map((service) => (
-              <ServiceCard key={service.title} {...service} />
-            ))}
+            </form>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
