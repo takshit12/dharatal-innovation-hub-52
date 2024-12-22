@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
+import { ChatInterface } from "@/components/ChatInterface";
 
 const Index = () => {
   const { toast } = useToast();
@@ -111,6 +112,13 @@ const Index = () => {
                 Request Call
               </Button>
             </form>
+          </div>
+          
+          <div className="mt-20">
+            <h2 className="text-3xl font-bold mb-8 tracking-tight font-mono">
+              Talk to <span className="text-[#0000FF]">Dharatal AI</span>
+            </h2>
+            <ChatInterface />
           </div>
         </div>
       </div>

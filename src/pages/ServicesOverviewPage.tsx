@@ -1,7 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { ServiceCard } from "@/components/ServiceCard";
 import { Brain, Bot, MessageSquare, Cog, Mic, Workflow } from "lucide-react";
-import { ChatInterface } from "@/components/ChatInterface";
 
 const services = [
   {
@@ -51,17 +50,10 @@ const ServicesOverviewPage = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-12 tracking-tight font-mono">
             Our <span className="text-[#0000FF]">Services</span>
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service) => (
               <ServiceCard key={service.title} {...service} />
             ))}
-          </div>
-          
-          <div className="mt-20">
-            <h2 className="text-3xl font-bold mb-8 tracking-tight font-mono">
-              Talk to <span className="text-[#0000FF]">Dharatal AI</span>
-            </h2>
-            <ChatInterface />
           </div>
         </div>
       </div>
