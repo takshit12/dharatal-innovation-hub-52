@@ -51,8 +51,7 @@ export const ChatInterface = () => {
       const response = await fetch("https://hook.eu2.make.com/yz4o4r49vpaoydbbn8lwwo83d27fikt9", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           message: userMessage
@@ -64,25 +63,24 @@ export const ChatInterface = () => {
       // Add a delay of 15 seconds before processing the response
       await new Promise(resolve => setTimeout(resolve, 15000));
 
-      const responseText = await response.text();
-      console.log("Raw response:", responseText); // Debug log
-
-      const data = JSON.parse(responseText);
-      console.log("Parsed webhook response:", data); // Debug log
+      const data = await response.json();
+      console.log("Webhook response:", data);
 
       if (Array.isArray(data) && data.length > 0) {
         const webhookResponse = data[0] as WebhookResponse;
         if (webhookResponse && webhookResponse.body) {
-          setMessages(prev => [...prev, { role: "assistant", content: webhookResponse.body }]);
-        } else {
-          throw new Error("Invalid response format");
+          setMessages(prev => [...prev, { 
+            role: "assistant", 
+            content: webhookResponse.body.trim() 
+          }]);
         }
-      } else {
-        throw new Error("Invalid response format - expected array");
       }
     } catch (error) {
       console.error("Error in sendMessage:", error);
-      setMessages(prev => [...prev, { role: "assistant", content: "Sorry, I encountered an error while processing your message." }]);
+      setMessages(prev => [...prev, { 
+        role: "assistant", 
+        content: "Sorry, I encountered an error while processing your message." 
+      }]);
     } finally {
       setIsLoading(false);
     }
