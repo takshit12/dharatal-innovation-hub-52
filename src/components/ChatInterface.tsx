@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import { Send } from "lucide-react";
 
 interface Message {
-  role: "assistant" | "user" | "debug";
+  role: "assistant" | "user";
   content: string;
 }
 
@@ -25,10 +25,6 @@ export const ChatInterface = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const addDebugMessage = (content: string) => {
-    setMessages(prev => [...prev, { role: "debug", content }]);
-  };
-
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     const userMessage = input.trim();
@@ -40,8 +36,6 @@ export const ChatInterface = () => {
       setIsLoading(true);
       setMessages(prev => [...prev, { role: "user", content: userMessage }]);
 
-      addDebugMessage(`Sending message: ${userMessage}`);
-
       const response = await fetch("https://hook.eu2.make.com/yz4o4r49vpaoydbbn8lwwo83d27fikt9", {
         method: "POST",
         headers: {
@@ -50,45 +44,16 @@ export const ChatInterface = () => {
         body: JSON.stringify({ message: userMessage })
       });
 
-      addDebugMessage(`Response status: ${response.status}`);
-      
       const responseText = await response.text();
-      addDebugMessage(`Raw response: ${responseText}`);
-
-      if (responseText) {
-        try {
-          const data = JSON.parse(responseText);
-          addDebugMessage(`Parsed data: ${JSON.stringify(data, null, 2)}`);
-
-          if (Array.isArray(data) && data.length > 0 && data[0].body) {
-            const assistantMessage = data[0].body.trim();
-            addDebugMessage(`Extracted message: ${assistantMessage}`);
-            
-            setMessages(prev => [...prev, {
-              role: "assistant",
-              content: assistantMessage
-            }]);
-          } else {
-            throw new Error("Invalid response structure");
-          }
-        } catch (parseError) {
-          addDebugMessage(`Parse error: ${parseError.message}`);
-          addDebugMessage(`Response text length: ${responseText.length}`);
-          addDebugMessage(`First 50 characters: ${responseText.slice(0, 50)}`);
-          throw parseError;
-        }
-      } else {
-        throw new Error("Empty response received");
-      }
-    } catch (error) {
-      addDebugMessage(`Error: ${error.message}`);
-      if (error.stack) {
-        addDebugMessage(`Stack: ${error.stack}`);
-      }
       
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: `Error: ${error.message}`
+        content: responseText
+      }]);
+    } catch (error) {
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: "Sorry, I encountered an error. Please try again."
       }]);
     } finally {
       setIsLoading(false);
@@ -101,21 +66,13 @@ export const ChatInterface = () => {
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`flex ${
-              message.role === "assistant" 
-                ? "justify-start" 
-                : message.role === "user"
-                  ? "justify-end"
-                  : "justify-center"
-            }`}
+            className={`flex ${message.role === "assistant" ? "justify-start" : "justify-end"}`}
           >
             <div
               className={`max-w-[80%] p-3 border-2 border-black ${
                 message.role === "assistant"
                   ? "bg-[#FF90E8] text-black"
-                  : message.role === "debug"
-                    ? "bg-gray-100 text-gray-600 font-mono text-sm"
-                    : "bg-white"
+                  : "bg-white"
               }`}
             >
               {message.content}
